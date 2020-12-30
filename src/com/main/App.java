@@ -20,7 +20,7 @@ public class App extends Application {
             this.primaryStage = primaryStage;
             this.primaryStage.setTitle("Loan Calculator");
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(App.class.getResource("../gui/ui.fxml"));
+            loader.setLocation(App.class.getResource("../gui/UI.fxml"));
             rootLayout = (Parent) loader.load();
 
             // Show the scene containing the root layout.
