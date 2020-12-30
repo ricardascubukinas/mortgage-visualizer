@@ -1,7 +1,7 @@
 package com.controller;
 
 import com.helper.AlertHelper;
-import com.helper.InputChecker;
+import com.helper.InputHelper;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -59,6 +59,10 @@ public class InputController {
     @FXML
     protected void handleCalculateButtonAction(ActionEvent event) {
         if (handleErrors(event)) {
+            defermentButton.setDisable(false);
+            filterButton.setDisable(false);
+            totalLabel.setVisible(true);
+            repaymentLabel.setVisible(true);
         }
     }
 
@@ -69,7 +73,7 @@ public class InputController {
 
     @FXML
     private boolean handleErrors(ActionEvent event) {
-        InputChecker checker = new InputChecker();
+        InputHelper checker = new InputHelper();
         Window owner = calculateButton.getScene().getWindow();
         if (amountField.getText().isEmpty()) {
             AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Form Error!", "Please enter the loan amount");

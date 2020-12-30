@@ -13,6 +13,7 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -65,8 +66,11 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <RadioButton fx:id="annuityRadio" layoutX="10.0" layoutY="183.0" mnemonicParsing="false" selected="true" text="Annuity" />
-                  <RadioButton fx:id="linearRadio" layoutX="95.0" layoutY="183.0" mnemonicParsing="false" text="Linear" />
+                  <RadioButton fx:id="annuityRadio" layoutX="10.0" layoutY="183.0" mnemonicParsing="false" onAction="#handleRadioButtonAction" selected="true" text="Annuity">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="typeGroup" />
+                     </toggleGroup></RadioButton>
+                  <RadioButton fx:id="linearRadio" layoutX="95.0" layoutY="183.0" mnemonicParsing="false" onAction="#handleRadioButtonAction" text="Linear" toggleGroup="$typeGroup" />
                   <Button fx:id="calculateButton" layoutX="219.0" layoutY="29.0" mnemonicParsing="false" onAction="#handleCalculateButtonAction" prefHeight="26.0" prefWidth="106.0" text="Calculate">
                      <font>
                         <Font size="14.0" />
