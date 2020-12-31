@@ -9,9 +9,9 @@ public class AdvancedLoan extends Loan {
     private final IntegerProperty filterFrom;
     private final IntegerProperty filterTo;
 
-    public AdvancedLoan(int dfrom, int dto, int ffrom, int fto, float balance, float interest, int length,
-            boolean type) {
-        super(balance, interest, length, type);
+    public AdvancedLoan(int dfrom, int dto, int ffrom, int fto, float balance, float interest, float interestType,
+            int length, boolean type) {
+        super(balance, interest, interestType, length, type);
         this.defermentFrom = new SimpleIntegerProperty(dfrom);
         this.defermentTo = new SimpleIntegerProperty(dto);
         this.filterFrom = new SimpleIntegerProperty(ffrom);

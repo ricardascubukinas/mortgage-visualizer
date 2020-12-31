@@ -5,19 +5,25 @@ import com.helper.InputHelper;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.stage.Window;
 
-import java.text.DecimalFormat;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 import com.dataStructure.AdvancedLoan;
+import com.dataStructure.MonthlyPayment;
 
-public class InputController {
+public class InputController implements Initializable {
     private AdvancedLoan Loan;
 
     @FXML
@@ -48,6 +54,12 @@ public class InputController {
     private Label repaymentLabel;
 
     @FXML
+    private RadioButton annualRadio;
+
+    @FXML
+    private RadioButton monthlyRadio;
+
+    @FXML
     private RadioButton annuityRadio;
 
     @FXML
@@ -63,14 +75,29 @@ public class InputController {
     private Button filterButton;
 
     @FXML
+    private TableView<MonthlyPayment> loanTable;
+
+    @FXML
+    private TableColumn<MonthlyPayment, Integer> monthColumn;
+
+    @FXML
+    private TableColumn<MonthlyPayment, Float> balanceColumn;
+
+    @FXML
+    private TableColumn<MonthlyPayment, Float> installmentColumn;
+
+    @FXML
+    private TableColumn<MonthlyPayment, Float> interestColumn;
+
+    @FXML
+    private TableColumn<MonthlyPayment, Float> repaymentColumn;
+
+    @FXML
     protected void handleCalculateButtonAction(ActionEvent event) {
         if (handleErrors(event)) {
 
-            DecimalFormat df = new DecimalFormat("0.00");
             defermentButton.setDisable(false);
             filterButton.setDisable(false);
-            totalLabel.setVisible(true);
-            repaymentLabel.setVisible(true);
             float balance = Float.parseFloat(amountField.getText());
             float interestRate = Float.parseFloat(interestField.getText());
             int length = Integer.parseInt(lengthField.getText());
@@ -79,7 +106,17 @@ public class InputController {
                 loanType = false;
             else
                 loanType = true;
-            Loan = new AdvancedLoan(0, 0, 0, 0, balance, interestRate, length, loanType);
+            float interestType;
+            if (annualRadio.isSelected()) {
+                interestType = 1.0f / 12.0f;
+            } else
+                interestType = 1.0f;
+            Loan = new AdvancedLoan(0, 0, 0, length, balance, interestRate, interestType, length, loanType);
+            totalLabel.setText("Total amount: " + String.valueOf(Loan.getBalance()));
+            repaymentLabel.setText("Total repayment amount: " + String.valueOf(Loan.getTotalRepayment()));
+            totalLabel.setVisible(true);
+            repaymentLabel.setVisible(true);
+            loanTable.setItems(Loan.getPayments());
 
         }
     }
@@ -121,5 +158,14 @@ public class InputController {
         }
         AlertHelper.showAlert(AlertType.INFORMATION, owner, "Helpful message", "It worked!");
         return true;
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        monthColumn.setCellValueFactory(new PropertyValueFactory<MonthlyPayment, Integer>("Month"));
+        balanceColumn.setCellValueFactory(new PropertyValueFactory<MonthlyPayment, Float>("Balance"));
+        installmentColumn.setCellValueFactory(new PropertyValueFactory<MonthlyPayment, Float>("Installment"));
+        interestColumn.setCellValueFactory(new PropertyValueFactory<MonthlyPayment, Float>("Interest"));
+        repaymentColumn.setCellValueFactory(new PropertyValueFactory<MonthlyPayment, Float>("Repayment"));
     }
 }
