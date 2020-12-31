@@ -13,7 +13,13 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.stage.Window;
 
+import java.text.DecimalFormat;
+
+import com.dataStructure.AdvancedLoan;
+
 public class InputController {
+    private AdvancedLoan Loan;
+
     @FXML
     private TextField amountField;
 
@@ -59,10 +65,22 @@ public class InputController {
     @FXML
     protected void handleCalculateButtonAction(ActionEvent event) {
         if (handleErrors(event)) {
+
+            DecimalFormat df = new DecimalFormat("0.00");
             defermentButton.setDisable(false);
             filterButton.setDisable(false);
             totalLabel.setVisible(true);
             repaymentLabel.setVisible(true);
+            float balance = Float.parseFloat(amountField.getText());
+            float interestRate = Float.parseFloat(interestField.getText());
+            int length = Integer.parseInt(lengthField.getText());
+            boolean loanType;
+            if (annuityRadio.isSelected())
+                loanType = false;
+            else
+                loanType = true;
+            Loan = new AdvancedLoan(0, 0, 0, 0, balance, interestRate, length, loanType);
+
         }
     }
 
