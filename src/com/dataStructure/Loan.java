@@ -18,7 +18,7 @@ public abstract class Loan {
     // 0 - for annuity, 1 - for linear
     protected final BooleanProperty loanType;
 
-    protected ObservableList<MonthlyPayment> payments = FXCollections.observableArrayList();;
+    protected ObservableList<MonthlyPayment> payments = FXCollections.observableArrayList();
 
     public Loan(float balance, float interest, float interestType, int length, boolean type) {
         this.balance = new SimpleFloatProperty(balance);
@@ -65,11 +65,6 @@ public abstract class Loan {
                 tempBalance = 0.00f;
             }
             addPayment(new MonthlyPayment(i + 1, tempBalance, tempInstallment, tempInterest, repayment));
-            System.out.println(payments.get(i).getBalance());
-            System.out.println(payments.get(i).getInstallment());
-            System.out.println(payments.get(i).getInterest());
-            System.out.println(payments.get(i).getRepayment());
-            System.out.println("");
             totalRepayment.set((float) (Math.round((totalRepayment.get() + tempInstallment) * 100.00) / 100.00));
         }
     }

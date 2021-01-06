@@ -14,13 +14,17 @@ public class InputHelper {
         return true;
     }
 
-    public boolean isInteger(String input) {
+    public boolean isPositiveInteger(String input) {
         if (input == null) {
             return false;
         }
+        int d;
         try {
-            int d = Integer.parseInt(input);
+            d = Integer.parseInt(input);
         } catch (NumberFormatException nfe) {
+            return false;
+        }
+        if (d <= 0) {
             return false;
         }
         return true;

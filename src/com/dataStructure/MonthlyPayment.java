@@ -20,6 +20,26 @@ public class MonthlyPayment {
         this.repayment = new SimpleFloatProperty(repayment);
     }
 
+    public void setMonth(int month) {
+        this.month.set(month);
+    }
+
+    public void setBalance(float balance) {
+        this.balance.set(balance);
+    }
+
+    public void setInstallment(float installment) {
+        this.installment.set(installment);
+    }
+
+    public void setInterest(float interest) {
+        this.interest.set(interest);
+    }
+
+    public void setRepayment(float repayment) {
+        this.repayment.set(repayment);
+    }
+
     public int getMonth() {
         return month.get();
     }

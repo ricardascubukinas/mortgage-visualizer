@@ -36,7 +36,7 @@
     </MenuBar>
       <SplitPane dividerPositions="0.4" orientation="VERTICAL" prefHeight="720.0" prefWidth="960.0" stylesheets="@style.css">
         <items>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="236.0" prefWidth="958.0" SplitPane.resizableWithParent="false">
+          <AnchorPane fx:id="inputPane" minHeight="0.0" minWidth="0.0" prefHeight="236.0" prefWidth="958.0" SplitPane.resizableWithParent="false">
                <children>
                   <Label layoutX="14.0" layoutY="14.0" prefHeight="20.0" prefWidth="150.0" text="Loan Amount" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
                      <font>
@@ -76,36 +76,31 @@
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <Button fx:id="defermentButton" disable="true" layoutX="426.0" layoutY="29.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="106.0" text="Deferment">
+                  <Button fx:id="defermentButton" disable="true" layoutX="426.0" layoutY="29.0" mnemonicParsing="false" onAction="#handleDefermentButtonAction" prefHeight="26.0" prefWidth="106.0" text="Deferment">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <Button fx:id="filterButton" disable="true" layoutX="712.0" layoutY="29.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="106.0" text="Filter" AnchorPane.leftAnchor="712.0" AnchorPane.topAnchor="29.0">
+                  <Button fx:id="filterButton" disable="true" layoutX="712.0" layoutY="29.0" mnemonicParsing="false" onAction="#handleFilterButton" prefHeight="26.0" prefWidth="106.0" text="Filter" AnchorPane.leftAnchor="712.0" AnchorPane.topAnchor="29.0">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <TextField fx:id="defermentToField" layoutX="426.0" layoutY="123.0" promptText="E.G 6" />
+                  <TextField fx:id="defermentLengthField" layoutX="426.0" layoutY="123.0" promptText="E.G 6" />
                   <TextField fx:id="filterFromField" layoutX="712.0" layoutY="79.0" promptText="E.G 6" AnchorPane.leftAnchor="712.0" AnchorPane.topAnchor="79.0" />
-                  <TextField fx:id="filtertoField" layoutX="712.0" layoutY="121.0" promptText="E.G 6" />
-                  <Label fx:id="totalLabel" layoutX="219.0" layoutY="171.0" prefHeight="20.0" prefWidth="310.0" text="Total amount: 5165">
+                  <TextField fx:id="filterToField" layoutX="712.0" layoutY="121.0" promptText="E.G 6" />
+                  <Label fx:id="totalLabel" layoutX="219.0" layoutY="171.0" prefHeight="20.0" prefWidth="310.0" text="Total amount:" visible="false">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
                   <TextField fx:id="lengthField" layoutX="10.0" layoutY="168.0" promptText="E.G 4" />
-                  <Label fx:id="repaymentLabel" layoutX="219.0" layoutY="217.0" prefHeight="20.0" prefWidth="310.0" text="Total repayment amount: 5165">
+                  <Label layoutX="426.0" layoutY="103.0" prefHeight="20.0" prefWidth="171.0" text="Length(months)">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label layoutX="426.0" layoutY="103.0" prefHeight="20.0" prefWidth="171.0" text="To">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="426.0" layoutY="60.0" prefHeight="20.0" prefWidth="171.0" text="From">
+                  <Label layoutX="426.0" layoutY="60.0" prefHeight="20.0" prefWidth="171.0" text="Starting month">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -126,30 +121,35 @@
                      </toggleGroup>
                   </RadioButton>
                   <RadioButton fx:id="monthlyRadio" layoutX="95.0" layoutY="128.0" mnemonicParsing="false" onAction="#handleRadioButtonAction" text="Monthly" toggleGroup="$interestGroup" />
+                  <Label fx:id="repaymentLabel" layoutX="219.0" layoutY="208.0" prefHeight="20.0" prefWidth="310.0" text="Total repayment amount:" visible="false">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
                </children>
             </AnchorPane>
-            <SplitPane dividerPositions="0.5" prefHeight="189.0" prefWidth="638.0" SplitPane.resizableWithParent="false">
+            <SplitPane dividerPositions="0.592901878914405" prefHeight="189.0" prefWidth="638.0" SplitPane.resizableWithParent="false">
               <items>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" SplitPane.resizableWithParent="false">
                      <children>
                         <TableView fx:id="loanTable" layoutX="61.0" layoutY="71.0" prefHeight="455.0" prefWidth="475.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                           <columns>
                             <TableColumn fx:id="monthColumn" prefWidth="56.0" text="Month" />
-                            <TableColumn fx:id="balanceColumn" prefWidth="95.0" text="Balance" />
-                              <TableColumn fx:id="installmentColumn" prefWidth="94.0" text="Installment" />
-                              <TableColumn fx:id="interestColumn" prefWidth="117.0" text="Interest" />
-                              <TableColumn fx:id="repaymentColumn" prefWidth="112.0" text="Repayment" />
+                            <TableColumn fx:id="balanceColumn" prefWidth="128.0" text="Balance" />
+                              <TableColumn fx:id="installmentColumn" prefWidth="93.0" text="Installment" />
+                              <TableColumn fx:id="interestColumn" prefWidth="128.0" text="Interest" />
+                              <TableColumn fx:id="repaymentColumn" prefWidth="158.0" text="Repayment" />
                           </columns>
                         </TableView>
                      </children></AnchorPane>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" SplitPane.resizableWithParent="false">
+                <AnchorPane fx:id="graphPane" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" SplitPane.resizableWithParent="false">
                      <children>
-                        <LineChart fx:id="loanGraph" layoutY="14.0" prefHeight="455.0" prefWidth="475.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <LineChart fx:id="loanChart" animated="false" focusTraversable="true" layoutY="14.0" prefHeight="455.0" prefWidth="475.0" title="Payment Graph" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                           <xAxis>
-                            <CategoryAxis side="BOTTOM" />
+                            <CategoryAxis label="Months" side="BOTTOM" fx:id="xAxis" />
                           </xAxis>
                           <yAxis>
-                            <NumberAxis side="LEFT" />
+                            <NumberAxis fx:id="yAxis" label="Payment" side="LEFT" />
                           </yAxis>
                         </LineChart>
                      </children></AnchorPane>
