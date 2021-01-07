@@ -1,11 +1,13 @@
 package com.dataStructure;
 
+import java.io.Serializable;
+
 import javafx.beans.property.FloatProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
-public class MonthlyPayment {
+public class MonthlyPayment implements Serializable {
     private final IntegerProperty month;
     private final FloatProperty balance;
     private final FloatProperty installment;

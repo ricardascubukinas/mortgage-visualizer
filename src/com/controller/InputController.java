@@ -1,6 +1,7 @@
 package com.controller;
 
 import com.helper.InputHelper;
+import com.main.App;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,16 +20,24 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.stage.FileChooser;
 import javafx.stage.Window;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.prefs.Preferences;
 
 import com.dataStructure.AdvancedLoan;
 import com.dataStructure.MonthlyPayment;
 
 public class InputController implements Initializable {
     private AdvancedLoan Loan;
+    private App mainApp;
 
     @FXML
     private TextField amountField, interestField, lengthField, defermentFromField, defermentLengthField,
@@ -109,13 +118,44 @@ public class InputController implements Initializable {
     }
 
     @FXML
-    protected void handleOpenAbout() {
+    protected void handleAbout() {
         Window owner = calculateButton.getScene().getWindow();
         showAlert(Alert.AlertType.INFORMATION, owner, "About!", "This app was created by R.Č");
     }
 
     @FXML
-    void handleOpenSaveAs() {
+    private void handleSave() throws IOException {
+        File paymentFile = getPaymentFilePath();
+        if (paymentFile != null) {
+            savePaymentDataToFile(paymentFile);
+        } else {
+            handleSaveAs();
+        }
+    }
+
+    /**
+     * Opens a FileChooser to let the user select a file to save to.
+     * 
+     * @throws IOException
+     */
+    @FXML
+    private void handleSaveAs() throws IOException {
+        FileChooser fileChooser = new FileChooser();
+
+        // Set extension filter
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
+        fileChooser.getExtensionFilters().add(extFilter);
+
+        // Show save file dialog
+        File file = fileChooser.showSaveDialog(this.mainApp.getPrimaryStage());
+
+        if (file != null) {
+            // Make sure it has the correct extension
+            if (!file.getPath().endsWith(".txt")) {
+                file = new File(file.getPath() + ".txt");
+            }
+            savePaymentDataToFile(file);
+        }
     }
 
     @FXML
@@ -298,6 +338,83 @@ public class InputController implements Initializable {
 
     }
 
+    public File getPaymentFilePath() {
+        Preferences prefs = Preferences.userNodeForPackage(App.class);
+        String filePath = prefs.get("filePath", null);
+        if (filePath != null) {
+            return new File(filePath);
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Sets the file path of the currently loaded file. The path is persisted in the
+     * OS specific registry.
+     * 
+     * @param file the file or null to remove the path
+     */
+    public void setPaymentFilePath(File file) {
+        Preferences prefs = Preferences.userNodeForPackage(App.class);
+        if (file != null) {
+            prefs.put("filePath", file.getPath());
+
+            // Update the stage title.
+            // this.mainApp.setTitle("AddressApp - " + file.getName());
+        } else {
+            prefs.remove("filePath");
+
+            // Update the stage title.
+            // this.mainApp.setTitle("AddressApp");
+        }
+    }
+
+    public void setMainApp(App mainApp) {
+        this.mainApp = mainApp;
+    }
+
+    public void loadPaymentDataFromFile(File file) {
+        try {
+
+            // Reading XML from the file and unmarshalling.
+
+            Loan.getPayments().clear();
+
+            // Save the file path to the registry.
+            setPaymentFilePath(file);
+
+        } catch (Exception e) { // catches ANY exception
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Could not load data");
+            alert.setContentText("Could not load data from file:\n" + file.getPath());
+
+            alert.showAndWait();
+        }
+    }
+
+    /**
+     * Saves the current person data to the specified file.
+     * 
+     * @param file
+     * @throws IOException
+     */
+    public void savePaymentDataToFile(File file) throws IOException {
+        FileWriter fw = new FileWriter("test.txt");
+        PrintWriter pw = new PrintWriter(fw);
+
+        pw.println("Month Balance     Installment    Interest   Repayment");
+        List<MonthlyPayment> tempList = Loan.getPayments();
+        for (int i = Loan.getFilterFrom(); i < Loan.getFilterTo(); i++) {
+            MonthlyPayment cMonth = tempList.get(i);
+            pw.println(String.valueOf(cMonth.getMonth()) + "     " + String.valueOf(cMonth.getBalance() + "     ")
+                    + String.valueOf(cMonth.getInstallment()) + "        "
+                    + String.valueOf(cMonth.getInterest() + "    ") + String.valueOf(cMonth.getRepayment()));
+        }
+
+        pw.close();
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         monthColumn.setCellValueFactory(new PropertyValueFactory<MonthlyPayment, Integer>("Month"));
@@ -305,5 +422,9 @@ public class InputController implements Initializable {
         installmentColumn.setCellValueFactory(new PropertyValueFactory<MonthlyPayment, Float>("Installment"));
         interestColumn.setCellValueFactory(new PropertyValueFactory<MonthlyPayment, Float>("Interest"));
         repaymentColumn.setCellValueFactory(new PropertyValueFactory<MonthlyPayment, Float>("Repayment"));
+        File file = getPaymentFilePath();
+        if (file != null) {
+            loadPaymentDataFromFile(file);
+        }
     }
 }
