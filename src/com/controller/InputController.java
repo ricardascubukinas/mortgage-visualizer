@@ -35,58 +35,20 @@ public class InputController implements Initializable {
     private AdvancedLoan Loan;
 
     @FXML
-    private TextField amountField;
+    private TextField amountField, interestField, lengthField, defermentFromField, defermentLengthField,
+            filterFromField, filterToField;
 
     @FXML
-    private TextField interestField;
+    private Label totalLabel, repaymentLabel, lengthLabel;
 
     @FXML
-    private TextField lengthField;
+    private RadioButton annualRadio, monthlyRadio, annuityRadio, linearRadio;
 
     @FXML
-    private TextField defermentFromField;
-
-    @FXML
-    private TextField defermentLengthField;
-
-    @FXML
-    private TextField filterFromField;
-
-    @FXML
-    private TextField filterToField;
-
-    @FXML
-    private Label totalLabel;
-
-    @FXML
-    private Label repaymentLabel;
-
-    @FXML
-    private Label lengthLabel;
-
-    @FXML
-    private RadioButton annualRadio;
-
-    @FXML
-    private RadioButton monthlyRadio;
-
-    @FXML
-    private RadioButton annuityRadio;
-
-    @FXML
-    private RadioButton linearRadio;
-
-    @FXML
-    private Button calculateButton;
-
-    @FXML
-    private Button defermentButton;
+    private Button calculateButton, defermentButton, filterButton;
 
     @FXML
     Alert alert;
-
-    @FXML
-    private Button filterButton;
 
     @FXML
     private LineChart<String, Number> loanChart;
@@ -98,16 +60,7 @@ public class InputController implements Initializable {
     private TableColumn<MonthlyPayment, Integer> monthColumn;
 
     @FXML
-    private TableColumn<MonthlyPayment, Float> balanceColumn;
-
-    @FXML
-    private TableColumn<MonthlyPayment, Float> installmentColumn;
-
-    @FXML
-    private TableColumn<MonthlyPayment, Float> interestColumn;
-
-    @FXML
-    private TableColumn<MonthlyPayment, Float> repaymentColumn;
+    private TableColumn<MonthlyPayment, Float> balanceColumn, installmentColumn, interestColumn, repaymentColumn;
 
     @FXML
     protected void handleCalculateButtonAction(ActionEvent event) {
@@ -131,7 +84,6 @@ public class InputController implements Initializable {
                 interestType = 1.0f;
             Loan = new AdvancedLoan(0, 0, 0, length, balance, interestRate, interestType, length, loanType);
 
-            // loanTable.setItems(Loan.getPayments());
             updateTable();
             updateGraph();
         }
@@ -143,6 +95,7 @@ public class InputController implements Initializable {
             Loan.setDefermentFrom(Integer.parseInt(defermentFromField.getText()));
             Loan.setDefermentLength(Integer.parseInt(defermentLengthField.getText()));
             Loan.CalculateDefermentPeriod();
+
             updateTable();
             updateGraph();
         }
@@ -153,6 +106,7 @@ public class InputController implements Initializable {
         if (handleFilterErrors(event)) {
             Loan.setFilterFrom(Integer.parseInt(filterFromField.getText()) - 1);
             Loan.setFilterTo(Integer.parseInt(filterToField.getText()));
+
             updateTable();
             updateGraph();
         }
@@ -166,7 +120,6 @@ public class InputController implements Initializable {
 
     @FXML
     void handleOpenSave() {
-
     }
 
     @FXML

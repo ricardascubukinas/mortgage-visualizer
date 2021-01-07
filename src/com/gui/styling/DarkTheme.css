@@ -130,7 +130,7 @@
   -fx-border-width: 0 0 1 0;
   -fx-background-color: transparent;
   -fx-border-color: transparent transparent derive(-fx-base, 80%) transparent;
-  -fx-border-insets: 0 5 1 10;
+  -fx-border-insets: 0 5 1 0;
 }
 
 .table-view .column-header .label {
