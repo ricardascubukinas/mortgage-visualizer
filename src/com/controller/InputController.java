@@ -1,6 +1,5 @@
 package com.controller;
 
-import com.helper.AlertHelper;
 import com.helper.InputHelper;
 
 import javafx.collections.FXCollections;
@@ -16,7 +15,9 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.scene.control.Button;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
@@ -61,6 +62,9 @@ public class InputController implements Initializable {
     private Label repaymentLabel;
 
     @FXML
+    private Label lengthLabel;
+
+    @FXML
     private RadioButton annualRadio;
 
     @FXML
@@ -77,6 +81,8 @@ public class InputController implements Initializable {
 
     @FXML
     private Button defermentButton;
+
+    Alert alert;
 
     @FXML
     private Button filterButton;
@@ -130,10 +136,6 @@ public class InputController implements Initializable {
                 interestType = 1.0f;
             Loan = new AdvancedLoan(0, 0, 0, length, balance, interestRate, interestType, length, loanType);
 
-            totalLabel.setText("Total amount: " + String.valueOf(Loan.getBalance()));
-            repaymentLabel.setText("Total repayment amount: " + String.valueOf(Loan.getTotalRepayment()));
-            totalLabel.setVisible(true);
-            repaymentLabel.setVisible(true);
             // loanTable.setItems(Loan.getPayments());
             updateTable();
             updateGraph();
@@ -170,6 +172,9 @@ public class InputController implements Initializable {
             tempTable.add(payments.get(i));
         }
         loanTable.setItems(tempTable);
+        totalLabel.setText("Total amount: " + String.valueOf(Loan.getBalance()));
+        repaymentLabel.setText("Total repayment amount: " + String.valueOf(Loan.getTotalRepayment()));
+        lengthLabel.setText("Total Length: " + String.valueOf(Loan.getLength()) + " Months");
     }
 
     @FXML
@@ -178,38 +183,37 @@ public class InputController implements Initializable {
         InputHelper checker = new InputHelper();
         Window owner = filterButton.getScene().getWindow();
         if (filterFromField.getText().isEmpty()) {
-            AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Form Error!",
-                    "Please enter the filter starting month.");
+            showAlert(Alert.AlertType.ERROR, owner, "Form Error!", "Please enter the filter starting month.");
             return false;
         }
         if (filterToField.getText().isEmpty()) {
-            AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Form Error!", "Please enter the filter to month.");
+            showAlert(Alert.AlertType.ERROR, owner, "Form Error!", "Please enter the filter to month.");
             return false;
         }
         if (!checker.isPositiveInteger(filterFromField.getText())) {
-            AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Input Error!",
+            showAlert(Alert.AlertType.ERROR, owner, "Input Error!",
                     "The filter starting month must be a positive integer");
             return false;
         }
         if (!checker.isPositiveInteger(filterToField.getText())) {
-            AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Input Error!",
+            showAlert(Alert.AlertType.ERROR, owner, "Input Error!",
                     "The filter ending month must be a positive integer");
             return false;
         }
         int filterFrom = Integer.parseInt(filterFromField.getText());
         int filterTo = Integer.parseInt(filterToField.getText());
         if (filterFrom > Loan.getLength()) {
-            AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Input Error!",
+            showAlert(Alert.AlertType.ERROR, owner, "Input Error!",
                     "The starting month can't be more than or equal to loan's length");
             return false;
         }
         if (filterTo > Loan.getLength()) {
-            AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Input Error!",
+            showAlert(Alert.AlertType.ERROR, owner, "Input Error!",
                     "The filter to month can't be bigger than the loan length");
             return false;
         }
         if (filterFrom > filterTo) {
-            AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Input Error!",
+            showAlert(Alert.AlertType.ERROR, owner, "Input Error!",
                     "The filter from month can't be bigger than filter to month");
             return false;
         }
@@ -221,33 +225,32 @@ public class InputController implements Initializable {
         InputHelper checker = new InputHelper();
         Window owner = defermentButton.getScene().getWindow();
         if (defermentFromField.getText().isEmpty()) {
-            AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Form Error!",
-                    "Please enter the deferment starting month.");
+            showAlert(Alert.AlertType.ERROR, owner, "Form Error!", "Please enter the deferment starting month.");
             return false;
         }
         if (defermentLengthField.getText().isEmpty()) {
-            AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Form Error!", "Please enter the deferment length.");
+            showAlert(Alert.AlertType.ERROR, owner, "Form Error!", "Please enter the deferment length.");
             return false;
         }
         if (!checker.isPositiveInteger(defermentFromField.getText())) {
-            AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Input Error!",
+            showAlert(Alert.AlertType.ERROR, owner, "Input Error!",
                     "The deferment starting month must be a positive integer");
             return false;
         }
         if (!checker.isPositiveInteger(defermentLengthField.getText())) {
-            AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Input Error!",
+            showAlert(Alert.AlertType.ERROR, owner, "Input Error!",
                     "The deferment ending month must be a positive integer");
             return false;
         }
         int defFrom = Integer.parseInt(defermentFromField.getText());
         int defLength = Integer.parseInt(defermentLengthField.getText());
         if (defFrom >= Loan.getLength()) {
-            AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Input Error!",
+            showAlert(Alert.AlertType.ERROR, owner, "Input Error!",
                     "The starting month can't be more than or equal to loan's length");
             return false;
         }
         if (defLength > Loan.getLength()) {
-            AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Input Error!",
+            showAlert(Alert.AlertType.ERROR, owner, "Input Error!",
                     "The deferment length can't be longer than the loan length");
             return false;
         }
@@ -264,33 +267,42 @@ public class InputController implements Initializable {
         InputHelper checker = new InputHelper();
         Window owner = calculateButton.getScene().getWindow();
         if (amountField.getText().isEmpty()) {
-            AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Form Error!", "Please enter the loan amount");
+            showAlert(Alert.AlertType.ERROR, owner, "Form Error!", "Please enter the loan amount");
             return false;
         }
         if (interestField.getText().isEmpty()) {
-            AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Form Error!", "Please enther the interest rate");
+            showAlert(Alert.AlertType.ERROR, owner, "Form Error!", "Please enther the interest rate");
             return false;
         }
         if (lengthField.getText().isEmpty()) {
-            AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Form Error!", "Please enter the length");
+            showAlert(Alert.AlertType.ERROR, owner, "Form Error!", "Please enter the length");
             return false;
         }
         if (!checker.isFloat(amountField.getText())) {
-            AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Input Error!",
+            showAlert(Alert.AlertType.ERROR, owner, "Input Error!",
                     "The loan amount must be a number (float/integer)!");
             return false;
         }
         if (!checker.isFloat(interestField.getText())) {
-            AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Input Error!",
+            showAlert(Alert.AlertType.ERROR, owner, "Input Error!",
                     "The interest rate must be a number (float/integer)");
             return false;
         }
         if (!checker.isPositiveInteger(lengthField.getText())) {
-            AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Input Error!",
-                    "The length must be a number (integer)!");
+            showAlert(Alert.AlertType.ERROR, owner, "Input Error!", "The length must be a number (integer)!");
             return false;
         }
         return true;
+    }
+
+    @FXML
+    protected void handleOpenAbout(ActionEvent event) {
+
+    }
+
+    @FXML
+    protected void handleOpenSave(ActionEvent event) {
+
     }
 
     @FXML
@@ -320,6 +332,21 @@ public class InputController implements Initializable {
         loanChart.getData().add(seriesBalance);
         loanChart.getData().add(seriesInterest);
         loanChart.getData().add(seriesRepayment);
+    }
+
+    public void showAlert(Alert.AlertType alertType, Window owner, String title, String message) {
+
+        alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.initOwner(owner);
+        alert.setGraphic(new ImageView(this.getClass().getResource("../gui/images/remove64.png").toString()));
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.getStylesheets().add(getClass().getResource("../gui/images/DarkDialog.css").toExternalForm());
+        dialogPane.getStyleClass().add("myDialog");
+        alert.show();
+
     }
 
     @Override

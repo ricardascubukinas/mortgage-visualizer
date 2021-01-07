@@ -1,0 +1,26 @@
+.myDialog {
+  -fx-background-color: derive(#1d1d1d, 20%);
+  -fx-text-fill: #ffffff;
+  -fx-font-family: "RobotoMono Nerd Font";
+}
+/*.myDialog > *.button-bar {
+  -fx-background-color: #666666;
+}*/
+
+.myDialog > *.label.content {
+  -fx-font-size: 16;
+  -fx-text-fill: #ffffff;
+}
+
+.myDialog:header *.header-panel *.label {
+  -fx-font-size: 18;
+  -fx-fill: #ffffff;
+}
+
+.myDialog .button {
+  -fx-background-color: #404040;
+  -fx-text-fill: white;
+  -fx-wrap-text: true;
+  -fx-border-width: 1;
+  -fx-border-color: #ffffff;
+}

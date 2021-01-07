@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
@@ -9,6 +10,7 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -18,142 +20,189 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fillWidth="false" maxHeight="720.0" maxWidth="960.0" prefHeight="720.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controller.InputController">
+<VBox fillWidth="false" maxHeight="1080.0" maxWidth="960.0" prefHeight="1080.0" prefWidth="960.0" stylesheets="@styling/DarkTheme.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controller.InputController">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
         <Menu mnemonicParsing="false" text="File">
           <items>
-            <MenuItem mnemonicParsing="false" text="Save As…" />
+            <MenuItem mnemonicParsing="false" onAction="#handleOpenSave" text="Save" />
           </items>
         </Menu>
         <Menu mnemonicParsing="false" text="Help">
           <items>
-            <MenuItem mnemonicParsing="false" text="About MyHelloApp" />
+            <MenuItem mnemonicParsing="false" onAction="#handleOpenAbout" text="About Mortgage Calculator" />
           </items>
         </Menu>
       </menus>
     </MenuBar>
-      <SplitPane dividerPositions="0.4" orientation="VERTICAL" prefHeight="720.0" prefWidth="960.0" stylesheets="@style.css">
+      <SplitPane dividerPositions="0.38857938718662954" orientation="VERTICAL" prefHeight="1053.0" prefWidth="960.0">
         <items>
-          <AnchorPane fx:id="inputPane" minHeight="0.0" minWidth="0.0" prefHeight="236.0" prefWidth="958.0" SplitPane.resizableWithParent="false">
+          <AnchorPane fx:id="inputPane" maxHeight="275.0" minHeight="0.0" minWidth="0.0" prefHeight="0.0" prefWidth="958.0" styleClass="pane" SplitPane.resizableWithParent="false">
                <children>
-                  <Label layoutX="14.0" layoutY="14.0" prefHeight="20.0" prefWidth="150.0" text="Loan Amount" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
+                  <Label layoutX="21.0" layoutY="14.0" prefHeight="20.0" prefWidth="150.0" text="Loan Amount" AnchorPane.leftAnchor="16.0" AnchorPane.topAnchor="10.0">
                      <font>
-                        <Font size="14.0" />
+                        <Font name="Roboto Mono Light Nerd Font Complete" size="13.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="amountField" layoutX="10.0" layoutY="30.0" promptText="E.G 5000.4" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="30.0" />
-                  <Label layoutX="10.0" layoutY="56.0" prefHeight="20.0" prefWidth="150.0" text="Interest rate">
+                  <TextField fx:id="amountField" layoutX="16.0" layoutY="33.0" prefHeight="26.0" prefWidth="150.0" promptText="E.G 5000.4" AnchorPane.leftAnchor="16.0" AnchorPane.topAnchor="30.0">
                      <font>
-                        <Font size="14.0" />
+                        <Font name="Roboto Mono Light Nerd Font Complete" size="13.0" />
+                     </font></TextField>
+                  <Label layoutX="16.0" layoutY="58.0" prefHeight="20.0" prefWidth="150.0" text="Interest rate" AnchorPane.leftAnchor="16.0" AnchorPane.topAnchor="60.0">
+                     <font>
+                        <Font name="Roboto Mono Light Nerd Font Complete" size="13.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="interestField" layoutX="10.0" layoutY="76.0" promptText="E.G 2.5" />
-                  <Label layoutX="10.0" layoutY="149.0" prefHeight="20.0" prefWidth="150.0" text="Months">
+                  <TextField fx:id="interestField" layoutX="21.0" layoutY="78.0" prefHeight="26.0" prefWidth="150.0" promptText="E.G 2.5" AnchorPane.leftAnchor="16.0" AnchorPane.topAnchor="80.0">
                      <font>
-                        <Font size="14.0" />
+                        <Font name="Roboto Mono Light Nerd Font Complete" size="13.0" />
+                     </font></TextField>
+                  <Label layoutX="21.0" layoutY="107.0" prefHeight="20.0" prefWidth="150.0" text="Months" AnchorPane.leftAnchor="16.0" AnchorPane.topAnchor="110.0">
+                     <font>
+                        <Font name="Roboto Mono Light Nerd Font Complete" size="13.0" />
                      </font>
                   </Label>
-                  <Label layoutX="712.0" layoutY="59.0" prefHeight="20.0" prefWidth="171.0" text="From">
+                  <Label layoutX="711.0" layoutY="66.0" prefHeight="20.0" prefWidth="171.0" text="From">
                      <font>
-                        <Font size="14.0" />
+                        <Font name="Roboto Mono Light Nerd Font Complete" size="13.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="defermentFromField" layoutX="426.0" layoutY="80.0" promptText="E.G 12(months)" />
-                  <Label layoutX="10.0" layoutY="194.0" prefHeight="20.0" prefWidth="150.0" text="Loan type">
+                  <TextField fx:id="defermentFromField" layoutX="424.0" layoutY="84.0" prefHeight="26.0" prefWidth="150.0" promptText="E.G 12">
                      <font>
-                        <Font size="14.0" />
+                        <Font name="Roboto Mono Light Nerd Font Complete" size="13.0" />
+                     </font></TextField>
+                  <Label layoutX="16.0" layoutY="220.0" prefHeight="20.0" prefWidth="150.0" text="Loan type" textFill="WHITE" AnchorPane.leftAnchor="16.0" AnchorPane.topAnchor="220.0">
+                     <font>
+                        <Font name="Roboto Mono Light Nerd Font Complete" size="13.0" />
                      </font>
                   </Label>
-                  <RadioButton fx:id="annuityRadio" layoutX="10.0" layoutY="218.0" mnemonicParsing="false" onAction="#handleRadioButtonAction" selected="true" text="Annuity">
+                  <RadioButton fx:id="annuityRadio" layoutX="22.0" layoutY="93.0" mnemonicParsing="false" onAction="#handleRadioButtonAction" prefHeight="16.0" prefWidth="94.0" selected="true" text="Annuity" AnchorPane.rightAnchor="761.0" AnchorPane.topAnchor="245.0">
                      <toggleGroup>
                         <ToggleGroup fx:id="typeGroup" />
-                     </toggleGroup></RadioButton>
-                  <RadioButton fx:id="linearRadio" layoutX="95.0" layoutY="218.0" mnemonicParsing="false" onAction="#handleRadioButtonAction" text="Linear" toggleGroup="$typeGroup" />
+                     </toggleGroup>
+                     <font>
+                        <Font name="Roboto Mono Light Nerd Font Complete" size="13.0" />
+                     </font></RadioButton>
+                  <RadioButton fx:id="linearRadio" layoutX="14.0" layoutY="244.0" mnemonicParsing="false" onAction="#handleRadioButtonAction" prefHeight="18.0" prefWidth="87.0" text="Linear" toggleGroup="$typeGroup" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="855.0" AnchorPane.topAnchor="245.0">
+                     <font>
+                        <Font name="Roboto Mono Light Nerd Font Complete" size="13.0" />
+                     </font></RadioButton>
                   <Button fx:id="calculateButton" layoutX="219.0" layoutY="29.0" mnemonicParsing="false" onAction="#handleCalculateButtonAction" prefHeight="26.0" prefWidth="106.0" text="Calculate">
                      <font>
-                        <Font size="14.0" />
+                        <Font name="Roboto Mono Light Nerd Font Complete" size="13.0" />
                      </font>
                   </Button>
-                  <Button fx:id="defermentButton" disable="true" layoutX="426.0" layoutY="29.0" mnemonicParsing="false" onAction="#handleDefermentButtonAction" prefHeight="26.0" prefWidth="106.0" text="Deferment">
+                  <Button fx:id="defermentButton" disable="true" layoutX="219.0" layoutY="80.0" mnemonicParsing="false" onAction="#handleDefermentButtonAction" prefHeight="26.0" prefWidth="106.0" text="Deferment">
                      <font>
-                        <Font size="14.0" />
+                        <Font name="Roboto Mono Light Nerd Font Complete" size="13.0" />
                      </font>
                   </Button>
-                  <Button fx:id="filterButton" disable="true" layoutX="712.0" layoutY="29.0" mnemonicParsing="false" onAction="#handleFilterButton" prefHeight="26.0" prefWidth="106.0" text="Filter" AnchorPane.leftAnchor="712.0" AnchorPane.topAnchor="29.0">
+                  <Button fx:id="filterButton" disable="true" layoutX="219.0" layoutY="135.0" mnemonicParsing="false" onAction="#handleFilterButton" prefHeight="26.0" prefWidth="106.0" text="Filter" AnchorPane.leftAnchor="219.0" AnchorPane.topAnchor="135.0">
                      <font>
-                        <Font size="14.0" />
+                        <Font name="Roboto Mono Light Nerd Font Complete" size="13.0" />
                      </font>
                   </Button>
-                  <TextField fx:id="defermentLengthField" layoutX="426.0" layoutY="123.0" promptText="E.G 6" />
-                  <TextField fx:id="filterFromField" layoutX="712.0" layoutY="79.0" promptText="E.G 6" AnchorPane.leftAnchor="712.0" AnchorPane.topAnchor="79.0" />
-                  <TextField fx:id="filterToField" layoutX="712.0" layoutY="121.0" promptText="E.G 6" />
-                  <Label fx:id="totalLabel" layoutX="219.0" layoutY="171.0" prefHeight="20.0" prefWidth="310.0" text="Total amount:" visible="false">
+                  <TextField fx:id="defermentLengthField" layoutX="420.0" layoutY="141.0" prefHeight="26.0" prefWidth="150.0" promptText="E.G 6">
                      <font>
-                        <Font size="14.0" />
+                        <Font name="Roboto Mono Light Nerd Font Complete" size="13.0" />
+                     </font></TextField>
+                  <TextField fx:id="filterFromField" layoutX="711.0" layoutY="86.0" prefHeight="26.0" prefWidth="150.0" promptText="E.G 6" AnchorPane.topAnchor="86.0">
+                     <font>
+                        <Font name="Roboto Mono Light Nerd Font Complete" size="13.0" />
+                     </font></TextField>
+                  <TextField fx:id="filterToField" layoutX="711.0" layoutY="143.0" prefHeight="26.0" prefWidth="150.0" promptText="E.G 6">
+                     <font>
+                        <Font name="Roboto Mono Light Nerd Font Complete" size="13.0" />
+                     </font></TextField>
+                  <Label fx:id="totalLabel" layoutX="219.0" layoutY="222.0" prefHeight="20.0" prefWidth="310.0" text="Total Amount:" AnchorPane.topAnchor="222.0">
+                     <font>
+                        <Font name="Roboto Mono Light Nerd Font Complete" size="13.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="lengthField" layoutX="10.0" layoutY="168.0" promptText="E.G 4" />
-                  <Label layoutX="426.0" layoutY="103.0" prefHeight="20.0" prefWidth="171.0" text="Length(months)">
+                  <Label fx:id="repaymentLabel" layoutX="219.0" layoutY="241.0" prefHeight="20.0" prefWidth="310.0" text="Total Repayment Amount:" AnchorPane.topAnchor="245.0">
                      <font>
-                        <Font size="14.0" />
+                        <Font name="Roboto Mono Light Nerd Font Complete" size="13.0" />
                      </font>
                   </Label>
-                  <Label layoutX="426.0" layoutY="60.0" prefHeight="20.0" prefWidth="171.0" text="Starting month">
+                  <TextField fx:id="lengthField" layoutX="16.0" layoutY="129.0" prefHeight="26.0" prefWidth="150.0" promptText="E.G 4" AnchorPane.leftAnchor="16.0" AnchorPane.topAnchor="130.0">
                      <font>
-                        <Font size="14.0" />
+                        <Font name="Roboto Mono Light Nerd Font Complete" size="13.0" />
+                     </font></TextField>
+                  <Label layoutX="420.0" layoutY="121.0" prefHeight="20.0" prefWidth="150.0" text="Length(months)" AnchorPane.topAnchor="121.0">
+                     <font>
+                        <Font name="Roboto Mono Light Nerd Font Complete" size="13.0" />
                      </font>
                   </Label>
-                  <Label layoutX="712.0" layoutY="101.0" prefHeight="20.0" prefWidth="171.0" text="To">
+                  <Label layoutX="420.0" layoutY="64.0" prefHeight="20.0" prefWidth="150.0" text="Starting month">
                      <font>
-                        <Font size="14.0" />
+                        <Font name="Roboto Mono Light Nerd Font Complete" size="13.0" />
                      </font>
                   </Label>
-                  <Label layoutX="10.0" layoutY="104.0" prefHeight="20.0" prefWidth="150.0" text="Interest type">
+                  <Label layoutX="711.0" layoutY="123.0" prefHeight="20.0" prefWidth="150.0" text="To">
                      <font>
-                        <Font size="14.0" />
+                        <Font name="Roboto Mono Light Nerd Font Complete" size="13.0" />
+                     </font>
+                     <padding>
+                        <Insets left="2.0" />
+                     </padding>
+                  </Label>
+                  <Label layoutX="18.0" layoutY="164.0" prefHeight="20.0" prefWidth="150.0" text="Interest type" textFill="WHITE" AnchorPane.leftAnchor="16.0" AnchorPane.topAnchor="175.0">
+                     <font>
+                        <Font name="Roboto Mono Light Nerd Font Complete" size="13.0" />
                      </font>
                   </Label>
-                  <RadioButton fx:id="annualRadio" layoutX="10.0" layoutY="128.0" mnemonicParsing="false" onAction="#handleRadioButtonAction" selected="true" text="Annual">
+                  <RadioButton fx:id="annualRadio" layoutX="18.0" layoutY="192.0" mnemonicParsing="false" onAction="#handleRadioButtonAction" prefHeight="18.0" prefWidth="87.0" selected="true" text="Annual" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="855.0" AnchorPane.topAnchor="200.0">
                      <toggleGroup>
                         <ToggleGroup fx:id="interestGroup" />
                      </toggleGroup>
-                  </RadioButton>
-                  <RadioButton fx:id="monthlyRadio" layoutX="95.0" layoutY="128.0" mnemonicParsing="false" onAction="#handleRadioButtonAction" text="Monthly" toggleGroup="$interestGroup" />
-                  <Label fx:id="repaymentLabel" layoutX="219.0" layoutY="208.0" prefHeight="20.0" prefWidth="310.0" text="Total repayment amount:" visible="false">
                      <font>
-                        <Font size="14.0" />
+                        <Font name="Roboto Mono Light Nerd Font Complete" size="13.0" />
+                     </font>
+                  </RadioButton>
+                  <RadioButton fx:id="monthlyRadio" layoutX="103.0" layoutY="192.0" mnemonicParsing="false" onAction="#handleRadioButtonAction" prefHeight="17.0" prefWidth="94.0" text="Monthly" toggleGroup="$interestGroup" AnchorPane.rightAnchor="761.0" AnchorPane.topAnchor="200.0">
+                     <font>
+                        <Font name="Roboto Mono Light Nerd Font Complete" size="13.0" />
+                     </font></RadioButton>
+                  <Separator layoutX="198.0" layoutY="-3.0" minHeight="0.5" orientation="VERTICAL" prefHeight="277.0" prefWidth="0.0" />
+                  <Separator layoutX="200.0" layoutY="188.0" prefHeight="3.0" prefWidth="761.0" />
+                  <Label layoutX="422.0" layoutY="31.0" prefHeight="20.0" prefWidth="150.0" text="Deferment">
+                     <font>
+                        <Font name="Roboto Mono Bold Nerd Font Complete" size="16.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="711.0" layoutY="31.0" prefHeight="20.0" prefWidth="150.0" text="Filter">
+                     <font>
+                        <Font name="Roboto Mono Bold Nerd Font Complete" size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lengthLabel" layoutX="219.0" layoutY="199.0" prefHeight="20.0" prefWidth="310.0" text="Total Length:">
+                     <font>
+                        <Font name="Roboto Mono Light Nerd Font Complete" size="13.0" />
                      </font>
                   </Label>
                </children>
             </AnchorPane>
-            <SplitPane dividerPositions="0.592901878914405" prefHeight="189.0" prefWidth="638.0" SplitPane.resizableWithParent="false">
-              <items>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" SplitPane.resizableWithParent="false">
-                     <children>
-                        <TableView fx:id="loanTable" layoutX="61.0" layoutY="71.0" prefHeight="455.0" prefWidth="475.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                          <columns>
-                            <TableColumn fx:id="monthColumn" prefWidth="56.0" text="Month" />
-                            <TableColumn fx:id="balanceColumn" prefWidth="128.0" text="Balance" />
-                              <TableColumn fx:id="installmentColumn" prefWidth="93.0" text="Installment" />
-                              <TableColumn fx:id="interestColumn" prefWidth="128.0" text="Interest" />
-                              <TableColumn fx:id="repaymentColumn" prefWidth="158.0" text="Repayment" />
-                          </columns>
-                        </TableView>
-                     </children></AnchorPane>
-                <AnchorPane fx:id="graphPane" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" SplitPane.resizableWithParent="false">
-                     <children>
-                        <LineChart fx:id="loanChart" animated="false" focusTraversable="true" layoutY="14.0" prefHeight="455.0" prefWidth="475.0" title="Payment Graph" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                          <xAxis>
-                            <CategoryAxis label="Months" side="BOTTOM" fx:id="xAxis" />
-                          </xAxis>
-                          <yAxis>
-                            <NumberAxis fx:id="yAxis" label="Payment" side="LEFT" />
-                          </yAxis>
-                        </LineChart>
-                     </children></AnchorPane>
-              </items>
+            <SplitPane dividerPositions="0.4" maxHeight="800.0" minWidth="800.0" orientation="VERTICAL" prefHeight="678.0" prefWidth="958.0">
+               <items>
+                  <TableView fx:id="loanTable" maxWidth="960.0" prefHeight="500.0" prefWidth="200.0" SplitPane.resizableWithParent="false">
+                    <columns>
+                      <TableColumn fx:id="monthColumn" editable="false" maxWidth="90.0" prefWidth="91.0" text="Month" />
+                      <TableColumn fx:id="balanceColumn" editable="false" prefWidth="180.0" text="Balance" />
+                        <TableColumn fx:id="installmentColumn" editable="false" prefWidth="234.0" text="Installment" />
+                        <TableColumn fx:id="interestColumn" editable="false" prefWidth="203.0" text="Interest" />
+                        <TableColumn fx:id="repaymentColumn" editable="false" maxWidth="220.0" prefWidth="228.0" text="Repayment" />
+                    </columns>
+                  </TableView>
+                  <LineChart fx:id="loanChart" alternativeColumnFillVisible="true" animated="false" focusTraversable="true" prefHeight="406.0" prefWidth="958.0" title="Payment Graph">
+                    <xAxis>
+                      <CategoryAxis animated="false" label="Months" side="BOTTOM" tickLabelFill="WHITE" fx:id="xAxis" />
+                    </xAxis>
+                    <yAxis>
+                      <NumberAxis fx:id="yAxis" animated="false" label="Payment" side="LEFT" tickLabelFill="WHITE" />
+                    </yAxis>
+                  </LineChart>
+               </items>
             </SplitPane>
         </items>
       </SplitPane>
