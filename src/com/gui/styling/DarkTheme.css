@@ -45,7 +45,7 @@
 }
 
 .chart-legend {
-  -fx-background-color: #b8b8b8;
+  -fx-background-color: #404040;
 }
 
 .chart-content {
@@ -143,6 +143,10 @@
   -fx-border-color: grey;
   -fx-border-width: 0 0 1 0;
   -fx-background-color: transparent;
+  -fx-text-fill: #ffffff;
+}
+
+.radio-button {
   -fx-text-fill: #ffffff;
 }
 
