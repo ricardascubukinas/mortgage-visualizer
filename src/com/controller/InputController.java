@@ -82,6 +82,7 @@ public class InputController implements Initializable {
     @FXML
     private Button defermentButton;
 
+    @FXML
     Alert alert;
 
     @FXML
@@ -89,12 +90,6 @@ public class InputController implements Initializable {
 
     @FXML
     private LineChart<String, Number> loanChart;
-
-    @FXML
-    private CategoryAxis xAxis;
-
-    @FXML
-    private NumberAxis yAxis;
 
     @FXML
     private TableView<MonthlyPayment> loanTable;
@@ -149,7 +144,6 @@ public class InputController implements Initializable {
             Loan.setDefermentLength(Integer.parseInt(defermentLengthField.getText()));
             Loan.CalculateDefermentPeriod();
             updateTable();
-            // loanTable.setItems(Loan.getPayments());
             updateGraph();
         }
     }
@@ -162,6 +156,17 @@ public class InputController implements Initializable {
             updateTable();
             updateGraph();
         }
+    }
+
+    @FXML
+    protected void handleOpenAbout() {
+        Window owner = calculateButton.getScene().getWindow();
+        showAlert(Alert.AlertType.INFORMATION, owner, "About!", "This app was created by R.Č");
+    }
+
+    @FXML
+    void handleOpenSave() {
+
     }
 
     @FXML
@@ -179,7 +184,6 @@ public class InputController implements Initializable {
 
     @FXML
     private boolean handleFilterErrors(ActionEvent event) {
-        System.out.println("hello");
         InputHelper checker = new InputHelper();
         Window owner = filterButton.getScene().getWindow();
         if (filterFromField.getText().isEmpty()) {
@@ -296,16 +300,6 @@ public class InputController implements Initializable {
     }
 
     @FXML
-    protected void handleOpenAbout(ActionEvent event) {
-
-    }
-
-    @FXML
-    protected void handleOpenSave(ActionEvent event) {
-
-    }
-
-    @FXML
     private void updateGraph() {
         loanChart.getData().clear();
         XYChart.Series<String, Number> seriesInstallment = new XYChart.Series<String, Number>();
@@ -334,16 +328,22 @@ public class InputController implements Initializable {
         loanChart.getData().add(seriesRepayment);
     }
 
+    @FXML
     public void showAlert(Alert.AlertType alertType, Window owner, String title, String message) {
 
-        alert = new Alert(Alert.AlertType.ERROR);
+        alert = new Alert(alertType);
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.initOwner(owner);
-        alert.setGraphic(new ImageView(this.getClass().getResource("../gui/images/remove64.png").toString()));
+        if (alertType == Alert.AlertType.ERROR) {
+            alert.setGraphic(new ImageView(this.getClass().getResource("../gui/images/remove64.png").toString()));
+        } else if (alertType == Alert.AlertType.INFORMATION) {
+            alert.setGraphic(new ImageView(this.getClass().getResource("../gui/images/about64.png").toString()));
+        }
+
         DialogPane dialogPane = alert.getDialogPane();
-        dialogPane.getStylesheets().add(getClass().getResource("../gui/images/DarkDialog.css").toExternalForm());
+        dialogPane.getStylesheets().add(getClass().getResource("../gui/styling/DarkDialog.css").toExternalForm());
         dialogPane.getStyleClass().add("myDialog");
         alert.show();
 
