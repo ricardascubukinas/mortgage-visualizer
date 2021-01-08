@@ -7,7 +7,7 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
-public class MonthlyPayment implements Serializable {
+public class MonthlyPayment {
     private final IntegerProperty month;
     private final FloatProperty balance;
     private final FloatProperty installment;
