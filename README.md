@@ -1,6 +1,6 @@
-## Description
+# Mortgage Visualizer
 
-**Loan Calculator** allows you to calculate mortgages annuity or linear displays loan amortization table and a graph to go with it
+Visualize mortgage repayments, show amortization table, calculate with a deferment period, filter through results
 
 ![Image of Application](images/app-layout.png)
 
